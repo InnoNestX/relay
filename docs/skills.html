@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Skills — relay</title>
+<meta name="description" content="The 24 relay skills across collaboration, testing, defects, notifications, docs, and code." />
+<link rel="icon" href="favicon.svg" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body class="lang-en">
+
+<div class="nav"><div class="wrap">
+  <a class="brand" href="index.html"><img src="favicon.svg" alt="" />relay</a>
+  <nav class="links">
+    <a href="index.html">Home</a>
+    <a href="install.html">Install</a>
+    <a href="scoring.html">Scoring gate</a>
+    <a href="skills.html" class="active">Skills</a>
+    <a href="https://github.com/InnoNestX/relay">GitHub</a>
+  </nav>
+  <div class="toggle" role="group" aria-label="Language">
+    <button type="button" data-lang="en" class="active">EN</button>
+    <button type="button" data-lang="zh">中文</button>
+  </div>
+</div></div>
+
+<header class="hero"><div class="wrap">
+  <p class="eyebrow"><span class="l-en">24 skills</span><span class="l-zh">24 个技能</span></p>
+  <h1>Skills</h1>
+  <p class="lead"><span class="l-en">Each skill is a bilingual Markdown file with triggers, inputs, steps, decision rules, output templates, handoffs, prohibitions and a self-check. Read any one via <code>relay show &lt;name&gt;</code> or the MCP tool <code>relay_get_skill</code>.</span><span class="l-zh">每个技能都是双语 Markdown,含触发、输入、步骤、判定、产出模板、交接、禁止项与自检。用 <code>relay show &lt;名称&gt;</code> 或 MCP 工具 <code>relay_get_skill</code> 查看。</span></p>
+</div></header>
+
+<main class="wrap page">
+
+  <h2><span class="l-en">Collaboration</span><span class="l-zh">协作</span></h2>
+  <table>
+    <tr><td><code>supervisor</code></td><td><span class="l-en">Split, dispatch (quoting the user), follow up, summarize — never execute.</span><span class="l-zh">拆分、派单(转述原话)、跟进、汇总——不亲自执行。</span></td></tr>
+    <tr><td><code>escalate-to-supervisor</code></td><td><span class="l-en">Intake rule: do your own job, hand off the clear, push cross-domain back.</span><span class="l-zh">接单判定:本职就做、明确就转、跨域推回。</span></td></tr>
+    <tr><td><code>parallel-helper-scale-out</code></td><td><span class="l-en">Spin up temporary test helpers in parallel so testing never queues.</span><span class="l-zh">并行拉临时测试助手,测试不排队。</span></td></tr>
+    <tr><td><code>self-improvement</code></td><td><span class="l-en">Idle-time patrol; turn every correction into a dated rule.</span><span class="l-zh">闲时巡检;把每次纠正沉淀成带日期的规则。</span></td></tr>
+  </table>
+
+  <h2><span class="l-en">Safety &amp; gate</span><span class="l-zh">安全与门禁</span></h2>
+  <table>
+    <tr><td><code>security-redlines</code></td><td><span class="l-en">Credentials, commit/deploy, production, sessions, redaction, outbound.</span><span class="l-zh">凭证、提交部署、生产、会话、脱敏、外发。</span></td></tr>
+    <tr><td><code>workflow-scorecard</code></td><td><span class="l-en">The backstop: check the flow was followed, score /100, re-run below the threshold.</span><span class="l-zh">兜底:核流程、按百分制打分、不达标重跑。</span></td></tr>
+  </table>
+
+  <h2><span class="l-en">Test cases</span><span class="l-zh">用例</span></h2>
+  <table>
+    <tr><td><code>test-case-design</code></td><td><span class="l-en">A coverage matrix → cases as md + json + a visual draft.</span><span class="l-zh">覆盖矩阵 → md + json + 可视化稿三份同源。</span></td></tr>
+    <tr><td><code>test-case-review</code></td><td><span class="l-en">Self-review checklist + sign-off; store only after it passes.</span><span class="l-zh">自评审清单 + 送审;通过后才落库。</span></td></tr>
+    <tr><td><code>test-case-publish</code></td><td><span class="l-en">Write to the case system: back up first, read back to verify.</span><span class="l-zh">写入用例系统:先备份、回读核对。</span></td></tr>
+  </table>
+
+  <h2><span class="l-en">Execution</span><span class="l-zh">执行</span></h2>
+  <table>
+    <tr><td><code>test-data-factory</code></td><td><span class="l-en">Make your own data; call the designated project first; restore config.</span><span class="l-zh">自己造数;优先调用指定项目;配置改回。</span></td></tr>
+    <tr><td><code>test-execution</code></td><td><span class="l-en">Headless-first, per-case evidence, judge by the latest requirement.</span><span class="l-zh">无头优先、逐条证据、按最新需求判定。</span></td></tr>
+    <tr><td><code>permission-testing</code></td><td><span class="l-en">Roles, menus, data scope, privilege escalation.</span><span class="l-zh">角色、菜单、数据范围、越权。</span></td></tr>
+    <tr><td><code>app-device-testing</code></td><td><span class="l-en">Native apps: edge/compat/native, multi-device, redacted logs.</span><span class="l-zh">原生 App:异常/兼容/原生能力、多机型、日志脱敏。</span></td></tr>
+    <tr><td><code>performance-testing</code></td><td><span class="l-en">Stable baseline, quantifiable advice, kept report count.</span><span class="l-zh">稳定基准、可量化建议、报告保留上限。</span></td></tr>
+  </table>
+
+  <h2><span class="l-en">Reporting &amp; defects</span><span class="l-zh">报告与缺陷</span></h2>
+  <table>
+    <tr><td><code>test-report</code></td><td><span class="l-en">Self-contained online report; evidence popups; IDs synced in three places.</span><span class="l-zh">自包含在线报告;证据弹窗;编号三处同步。</span></td></tr>
+    <tr><td><code>bug-filing</code></td><td><span class="l-en">Four-question minimalist ticket; severity mapping; notify after filing.</span><span class="l-zh">提单四问;严重度映射;提完即通知。</span></td></tr>
+    <tr><td><code>bug-retest</code></td><td><span class="l-en">Read the dev note, confirm the deploy, close or reactivate.</span><span class="l-zh">读研发备注、确认部署、关闭或激活。</span></td></tr>
+    <tr><td><code>defect-manager</code></td><td><span class="l-en">The single read/write owner of the defect system.</span><span class="l-zh">缺陷系统唯一读写出口。</span></td></tr>
+    <tr><td><code>weekly-bug-stats</code></td><td><span class="l-en">Weekly stats in one consistent format.</span><span class="l-zh">周统计,统一口径。</span></td></tr>
+  </table>
+
+  <h2><span class="l-en">Notify · docs · code</span><span class="l-zh">通知 · 文档 · 编码</span></h2>
+  <table>
+    <tr><td><code>notifier</code></td><td><span class="l-en">The single chat/IM owner; tone templates; per-person merging.</span><span class="l-zh">唯一 IM 出口;语气模板;按人合并。</span></td></tr>
+    <tr><td><code>requirement-watch</code></td><td><span class="l-en">Read-only patrol of the requirements channel → “impact on testing”.</span><span class="l-zh">需求群只读巡检 → 「对测试的影响」。</span></td></tr>
+    <tr><td><code>docs</code></td><td><span class="l-en">The single knowledge-base owner; format follows past pages.</span><span class="l-zh">知识库唯一出口;格式随以往页。</span></td></tr>
+    <tr><td><code>release-notes</code></td><td><span class="l-en">Release summaries in a fixed format and scope.</span><span class="l-zh">发版小结,固定格式与收录口径。</span></td></tr>
+    <tr><td><code>coder</code></td><td><span class="l-en">Scripts &amp; code; credentials out of code; commit/deploy only when authorized.</span><span class="l-zh">脚本与代码;凭证不进代码;授权才提交部署。</span></td></tr>
+  </table>
+</main>
+
+<footer><div class="wrap"><p>relay — MIT · <a href="https://github.com/InnoNestX/relay">InnoNestX</a> · <a href="https://hub.docker.com/r/xuxuclassmate/relay">Docker Hub</a> · <a href="https://clawhub.ai/xuxuclassmate">ClawHub</a></p></div></footer>
+<script src="lang.js"></script>
+</body>
+</html>

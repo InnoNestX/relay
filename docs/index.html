@@ -5,180 +5,90 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>relay — multi-agent dev+test workflow</title>
 <meta name="description" content="A model-agnostic multi-agent dev+test workflow: a supervisor dispatches, specialists execute, parallel helpers scale out — with a scoring gate that enforces the flow." />
-<style>
-  :root{--bg:#0b0d10;--surface:#14181d;--line:#232a31;--ink:#eef2f6;--muted:#9aa7b2;--blue:#4c8dff;--teal:#2dd4bf;--purple:#a78bfa}
-  *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif}
-  a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
-  .wrap{max-width:960px;margin:0 auto;padding:0 20px}
-  .langbar{position:sticky;top:0;z-index:10;background:rgba(11,13,16,.85);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-  .langbar .wrap{display:flex;justify-content:space-between;align-items:center;height:48px}
-  .brand{font-weight:700;letter-spacing:-.01em}
-  .toggle{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;font-size:13px}
-  .toggle button{background:transparent;color:var(--muted);border:0;padding:6px 14px;cursor:pointer;font:inherit}
-  .toggle button.active{background:var(--blue);color:#fff}
-  header{padding:60px 0 40px;border-bottom:1px solid var(--line)}
-  .eyebrow{color:var(--teal);font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-size:13px}
-  h1{font-size:clamp(34px,6vw,56px);margin:.2em 0 .1em;letter-spacing:-.02em}
-  .lead{color:var(--muted);font-size:clamp(17px,2.4vw,21px);max-width:60ch}
-  .cta{margin-top:26px;display:flex;gap:12px;flex-wrap:wrap}
-  .btn{display:inline-block;padding:11px 18px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-weight:600}
-  .btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}
-  section{padding:48px 0;border-bottom:1px solid var(--line)}
-  h2{font-size:clamp(24px,3.4vw,32px);letter-spacing:-.01em;margin:0 0 18px}
-  h3{margin:28px 0 8px;font-size:18px}
-  .grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
-  .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px}
-  .card h4{margin:0 0 6px;font-size:15px}
-  .card p{margin:0;color:var(--muted);font-size:14px}
-  .tag{color:var(--purple);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
-  ol.principles{counter-reset:p;list-style:none;padding:0}
-  ol.principles li{counter-increment:p;position:relative;padding:10px 0 10px 40px;color:var(--muted)}
-  ol.principles li::before{content:counter(p);position:absolute;left:0;top:8px;width:26px;height:26px;border-radius:8px;background:var(--surface);border:1px solid var(--line);color:var(--ink);display:grid;place-items:center;font-size:13px;font-weight:700}
-  pre{background:#0f1317;border:1px solid var(--line);border-radius:12px;padding:16px;overflow:auto;font-size:13px;line-height:1.55}
-  code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
-  .gate{background:linear-gradient(180deg,rgba(76,141,255,.08),transparent);border:1px solid var(--line);border-radius:16px;padding:22px}
-  .pill{display:inline-block;background:#0f1317;border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:12px;color:var(--muted);margin:2px 4px 2px 0}
-  footer{padding:40px 0 70px;color:var(--muted);font-size:14px}
-  .muted{color:var(--muted)}
-  /* language switch: English default; show Chinese only when body.lang-zh */
-  [lang="zh"]{display:none}
-  body.lang-zh [lang="en"]{display:none}
-  body.lang-zh [lang="zh"]{display:revert}
-</style>
+<link rel="icon" href="favicon.svg" />
+<link rel="stylesheet" href="style.css" />
 </head>
 <body class="lang-en">
 
-<div class="langbar"><div class="wrap">
-  <span class="brand">relay</span>
+<div class="nav"><div class="wrap">
+  <a class="brand" href="index.html"><img src="favicon.svg" alt="" />relay</a>
+  <nav class="links">
+    <a href="index.html" class="active">Home</a>
+    <a href="install.html">Install</a>
+    <a href="scoring.html">Scoring gate</a>
+    <a href="skills.html">Skills</a>
+    <a href="https://github.com/InnoNestX/relay">GitHub</a>
+  </nav>
   <div class="toggle" role="group" aria-label="Language">
     <button type="button" data-lang="en" class="active">EN</button>
     <button type="button" data-lang="zh">中文</button>
   </div>
 </div></div>
 
-<header><div class="wrap">
+<header class="hero"><div class="wrap">
   <p class="eyebrow">InnoNestX · open source</p>
   <h1>relay</h1>
-  <p class="lead" lang="en">A model-agnostic multi-agent workflow for the whole dev + test lifecycle. A supervisor dispatches, specialists each own one write channel, parallel helpers scale out — and a scoring gate makes sure the flow was actually followed.</p>
-  <p class="lead" lang="zh">一套模型无关的多智能体开发+测试全流程工作流。主管派单、专员各管一个写出口、临时助手并行扩容——并用打分门禁确保流程被真正遵循。</p>
+  <p class="lead l-en">A model-agnostic multi-agent workflow for the whole dev + test lifecycle. A supervisor dispatches, specialists each own one write channel, parallel helpers scale out — and a scoring gate makes sure the flow was actually followed.</p>
+  <p class="lead l-zh">一套模型无关的多智能体开发 + 测试全流程工作流。主管派单、专员各管一个写出口、临时助手并行扩容——并用打分门禁确保流程被真正遵循。</p>
   <div class="cta">
-    <a class="btn primary" href="https://github.com/InnoNestX/relay">GitHub</a>
+    <a class="btn primary" href="install.html"><span class="l-en">Install</span><span class="l-zh">安装</span></a>
+    <a class="btn" href="scoring.html"><span class="l-en">Scoring gate</span><span class="l-zh">打分门禁</span></a>
+    <a class="btn" href="https://github.com/InnoNestX/relay">GitHub</a>
     <a class="btn" href="https://hub.docker.com/r/xuxuclassmate/relay">Docker Hub</a>
     <a class="btn" href="https://clawhub.ai/xuxuclassmate">ClawHub</a>
-    <a class="btn" href="#install"><span lang="en">Install</span><span lang="zh">安装</span></a>
-    <a class="btn" href="#gate"><span lang="en">Scoring gate</span><span lang="zh">打分门禁</span></a>
   </div>
-  <p class="muted" style="margin-top:22px">
-    <span lang="en">Works with <b>Claude Code · GPT · Gemini · Cursor · Muse · Grok · DeepSeek</b> and any other agent — the skills are plain Markdown.</span>
-    <span lang="zh">兼容 <b>Claude Code · GPT · Gemini · Cursor · Muse · Grok · DeepSeek</b> 及任何其它智能体——技能都是纯 Markdown。</span>
+  <p class="muted" style="margin-top:20px">
+    <span class="l-en">Works with <b>Claude Code · GPT · Gemini · Cursor · Muse · Grok · DeepSeek</b> and any other agent — the skills are plain Markdown.</span>
+    <span class="l-zh">兼容 <b>Claude Code · GPT · Gemini · Cursor · Muse · Grok · DeepSeek</b> 及任何其它智能体——技能都是纯 Markdown。</span>
   </p>
 </div></header>
 
-<section><div class="wrap">
-  <h2><span lang="en">What you get</span><span lang="zh">你获得什么</span></h2>
-  <div class="grid">
-    <div class="card"><span class="tag">skills</span>
-      <h4><span lang="en">24 workflow skills</span><span lang="zh">24 个工作流技能</span></h4>
-      <p><span lang="en">Supervisor, testing, defects, notifications, coding, docs — each with triggers, steps, decision rules, output templates and a self-check. Bilingual content.</span><span lang="zh">主管、测试、缺陷、通知、编码、文档——每个都写清触发、步骤、判定、产出模板与自检。内容中英双语。</span></p>
+<main class="wrap page">
+  <section>
+    <h2><span class="l-en">What you get</span><span class="l-zh">你获得什么</span></h2>
+    <div class="grid">
+      <div class="card"><span class="tag">skills</span>
+        <h4><span class="l-en">24 workflow skills</span><span class="l-zh">24 个工作流技能</span></h4>
+        <p><span class="l-en">Supervisor, testing, defects, notifications, coding, docs — each with triggers, steps, decision rules and a self-check. Bilingual content.</span><span class="l-zh">主管、测试、缺陷、通知、编码、文档——每个都写清触发、步骤、判定与自检。内容中英双语。</span></p>
+      </div>
+      <div class="card"><span class="tag">gate</span>
+        <h4><span class="l-en">Scoring gate</span><span class="l-zh">打分门禁</span></h4>
+        <p><span class="l-en">Before delivery: did it follow the flow, and did it score high enough? Below the threshold → optimize and re-run.</span><span class="l-zh">交付前:是否按流程走、分数是否达标?低于阈值就优化并重跑。</span></p>
+      </div>
+      <div class="card"><span class="tag">server</span>
+        <h4><span class="l-en">MCP + CLI</span><span class="l-zh">MCP + CLI</span></h4>
+        <p><span class="l-en">A thin server feeds skills, templates and the gate to any MCP client, or run <code>relay</code> on the CLI.</span><span class="l-zh">一个薄服务把技能、模板、门禁喂给任意 MCP 客户端,或在命令行跑 <code>relay</code>。</span></p>
+      </div>
+      <div class="card"><span class="tag">ship</span>
+        <h4><span class="l-en">Many formats</span><span class="l-zh">多种形态</span></h4>
+        <p><span class="l-en">Claude Code plugin, Cursor rule, ChatGPT / Gemini / Grok, ClawHub skill + plugin, Docker, or local. See <a href="install.html">Install</a>.</span><span class="l-zh">Claude Code 插件、Cursor 规则、ChatGPT / Gemini / Grok、ClawHub skill + plugin、Docker 或本地。见 <a href="install.html">安装</a>。</span></p>
+      </div>
+      <div class="card"><span class="tag">safe</span>
+        <h4><span class="l-en">Desensitized</span><span class="l-zh">脱敏</span></h4>
+        <p><span class="l-en">Every system is a <code>{placeholder}</code>; examples use fictional people — no real platform or industry.</span><span class="l-zh">每个系统都是 <code>{占位符}</code>;示例用虚构人名——不含真实平台或行业。</span></p>
+      </div>
+      <div class="card"><span class="tag">any model</span>
+        <h4><span class="l-en">Model-agnostic</span><span class="l-zh">模型无关</span></h4>
+        <p><span class="l-en">Plain Markdown skills any model can read; MCP where the client supports it.</span><span class="l-zh">纯 Markdown 技能,任何模型可读;客户端支持时走 MCP。</span></p>
+      </div>
     </div>
-    <div class="card"><span class="tag">gate</span>
-      <h4><span lang="en">Scoring gate</span><span lang="zh">打分门禁</span></h4>
-      <p><span lang="en">Before delivery: did it follow the flow, and did it score high enough? Below the threshold → optimize and re-run.</span><span lang="zh">交付前:是否按流程走、分数是否达标?低于阈值就优化并重跑。</span></p>
-    </div>
-    <div class="card"><span class="tag">server</span>
-      <h4><span lang="en">MCP + CLI</span><span lang="zh">MCP + CLI</span></h4>
-      <p><span lang="en">A thin server feeds skills, templates and the gate to any MCP client, or run <code>relay</code> on the command line.</span><span lang="zh">一个薄服务把技能、模板、门禁喂给任意 MCP 客户端,或在命令行跑 <code>relay</code>。</span></p>
-    </div>
-    <div class="card"><span class="tag">ship</span>
-      <h4><span lang="en">Many formats</span><span lang="zh">多种形态</span></h4>
-      <p><span lang="en">Claude Code plugin, Cursor rule, ChatGPT / Gemini / Grok integrations, ClawHub skill + plugin, Docker image, or local.</span><span lang="zh">Claude Code 插件、Cursor 规则、ChatGPT / Gemini / Grok 接入、ClawHub skill + plugin、Docker 镜像或本地。</span></p>
-    </div>
-    <div class="card"><span class="tag">safe</span>
-      <h4><span lang="en">Desensitized</span><span lang="zh">脱敏</span></h4>
-      <p><span lang="en">Every system is a <code>{placeholder}</code>; examples use fictional people and scenarios — no real platform or industry.</span><span lang="zh">每个系统都是 <code>{占位符}</code>;示例用虚构人名与场景——不含真实平台或行业。</span></p>
-    </div>
-    <div class="card"><span class="tag">any model</span>
-      <h4><span lang="en">Model-agnostic</span><span lang="zh">模型无关</span></h4>
-      <p><span lang="en">Plain Markdown skills any model can read; MCP where the client supports it.</span><span lang="zh">纯 Markdown 技能,任何模型可读;客户端支持时走 MCP。</span></p>
-    </div>
-  </div>
-</div></section>
+  </section>
 
-<section><div class="wrap">
-  <h2><span lang="en">Principles</span><span lang="zh">核心原则</span></h2>
-  <ol class="principles">
-    <li><span lang="en">The supervisor dispatches, never executes.</span><span lang="zh">主管只调度,不亲自执行。</span></li>
-    <li><span lang="en">One owner per external write channel — chat, defect system, knowledge base, code/deploy.</span><span lang="zh">一类外部写操作只有一个出口——IM、缺陷系统、知识库、代码/部署。</span></li>
-    <li><span lang="en">Judge against the latest requirement — pass, file, or escalate.</span><span lang="zh">按最新需求判定——符合即过、不符合提单、拿不准升级。</span></li>
-    <li><span lang="en">Conclusions live in an online report; issue numbers stay in sync in three places.</span><span lang="zh">结论进在线报告;编号三处同步。</span></li>
-    <li><span lang="en">Testing never queues — scale out parallel helpers; testers make their own data.</span><span lang="zh">测试不排队——并行拉临时助手;测试自己造数。</span></li>
-    <li><span lang="en">Security red lines override everything.</span><span lang="zh">安全红线高于一切。</span></li>
-    <li><span lang="en">Every delivery passes the scoring gate.</span><span lang="zh">每次交付都过打分门禁。</span></li>
-  </ol>
-</div></section>
+  <section>
+    <h2><span class="l-en">Principles</span><span class="l-zh">核心原则</span></h2>
+    <ol class="steps">
+      <li><span class="l-en">The supervisor dispatches, never executes.</span><span class="l-zh">主管只调度,不亲自执行。</span></li>
+      <li><span class="l-en">One owner per external write channel — chat, defect system, knowledge base, code/deploy.</span><span class="l-zh">一类外部写操作只有一个出口——IM、缺陷系统、知识库、代码/部署。</span></li>
+      <li><span class="l-en">Judge against the latest requirement — pass, file, or escalate.</span><span class="l-zh">按最新需求判定——符合即过、不符合提单、拿不准升级。</span></li>
+      <li><span class="l-en">Conclusions live in an online report; issue numbers stay in sync in three places.</span><span class="l-zh">结论进在线报告;编号三处同步。</span></li>
+      <li><span class="l-en">Testing never queues — scale out parallel helpers; testers make their own data.</span><span class="l-zh">测试不排队——并行拉临时助手;测试自己造数。</span></li>
+      <li><span class="l-en">Security red lines override everything.</span><span class="l-zh">安全红线高于一切。</span></li>
+      <li><span class="l-en">Every delivery passes the <a href="scoring.html">scoring gate</a>.</span><span class="l-zh">每次交付都过<a href="scoring.html">打分门禁</a>。</span></li>
+    </ol>
+  </section>
+</main>
 
-<section id="gate"><div class="wrap">
-  <h2><span lang="en">The scoring gate</span><span lang="zh">打分门禁</span></h2>
-  <div class="gate">
-    <p><b>1 · <span lang="en">Follow-the-flow check (hard gate).</span><span lang="zh">流程符合性检查(硬门禁)。</span></b> <span lang="en">Verify every key step exists and is in order. If not, force the flow from the missing step — before any score.</span><span lang="zh">核对每个关键环节是否齐全且顺序正确;没按流程就从缺失环节强制重走,再打分。</span></p>
-    <p><b>2 · <span lang="en">Score out of 100</span><span lang="zh">按百分制打分</span></b> <span lang="en">against the rubric (<code>templates/scorecard.md</code>), one line of evidence per row.</span><span lang="zh">对照评分卡(<code>templates/scorecard.md</code>),每项写一行依据。</span></p>
-    <p><b>3 · <span lang="en">Verdict.</span><span lang="zh">判定。</span></b> <span class="pill">score ≥ PASS_SCORE → pass</span> <span class="pill">below → optimize &amp; re-run</span> <span lang="en">The threshold is configurable; default <b>80</b>.</span><span lang="zh">阈值可配,默认 <b>80</b>。</span></p>
-  </div>
-</div></section>
-
-<section id="install"><div class="wrap">
-  <h2><span lang="en">Install</span><span lang="zh">安装</span></h2>
-  <div style="display:flex;flex-wrap:wrap;gap:10px;margin:0 0 22px">
-    <a class="btn primary" href="https://github.com/InnoNestX/relay">GitHub repo</a>
-    <a class="btn" href="https://hub.docker.com/r/xuxuclassmate/relay">Docker Hub image</a>
-    <a class="btn" href="https://clawhub.ai/xuxuclassmate">ClawHub skill &amp; plugin</a>
-    <a class="btn" href="https://github.com/InnoNestX/relay/tree/main/plugins">Per-tool integrations</a>
-  </div>
-  <h3>Claude Code</h3>
-  <pre><code>/plugin marketplace add InnoNestX/relay
-/plugin install relay@relay
-# then: /relay-start &lt;requirement&gt;   ·   /relay-score</code></pre>
-  <h3><span lang="en">MCP (Cursor, Claude, any MCP client)</span><span lang="zh">MCP(Cursor、Claude 等任意 MCP 客户端)</span></h3>
-  <pre><code>{ "mcpServers": { "relay": {
-    "command": "docker", "args": ["run","-i","--rm","xuxuclassmate/relay"] } } }</code></pre>
-  <h3><span lang="en">Docker / local</span><span lang="zh">Docker / 本地</span></h3>
-  <pre><code>docker run --rm xuxuclassmate/relay list
-docker run -i --rm xuxuclassmate/relay            # MCP over stdio
-node server/cli.mjs list   ·   node server/cli.mjs score</code></pre>
-  <h3>ClawHub</h3>
-  <pre><code>clawhub install relay            # skill
-clawhub package explore relay     # plugin (OpenClaw package)</code></pre>
-  <h3><span lang="en">GPT · Gemini · Grok · DeepSeek · Muse · any model</span><span lang="zh">GPT · Gemini · Grok · DeepSeek · Muse · 任意模型</span></h3>
-  <p class="muted"><span lang="en">Each tool has a ready-made integration under <a href="https://github.com/InnoNestX/relay/tree/main/plugins"><code>plugins/</code></a> (chatgpt, gemini, grok, cursor, claude-code, mcp). Paste <code>plugins/system-prompt.md</code> as the system prompt / custom instructions / Gem, then optionally add the MCP server.</span><span lang="zh">每个工具的开箱接入件在 <a href="https://github.com/InnoNestX/relay/tree/main/plugins"><code>plugins/</code></a>(chatgpt、gemini、grok、cursor、claude-code、mcp)。把 <code>plugins/system-prompt.md</code> 作为系统提示 / 自定义指令 / Gem,再按需接 MCP 服务。</span></p>
-</div></section>
-
-<footer><div class="wrap">
-  <p>relay — MIT. <span lang="en">Built by</span><span lang="zh">由</span> <a href="https://github.com/InnoNestX">InnoNestX</a> <span lang="zh">构建</span>. <span lang="en">Docs in English; switch to 中文 above. Skill content is bilingual.</span><span lang="zh">文档默认英文,可在上方切换中文;技能内容为中英双语。</span></p>
-</div></footer>
-
-<script>
-  (function () {
-    var KEY = "relay-lang";
-    var saved = null;
-    try { saved = localStorage.getItem(KEY); } catch (e) {}
-    function apply(lang) {
-      document.body.classList.remove("lang-en", "lang-zh");
-      document.body.classList.add(lang === "zh" ? "lang-zh" : "lang-en");
-      document.documentElement.lang = lang === "zh" ? "zh" : "en";
-      document.querySelectorAll(".toggle button").forEach(function (b) {
-        b.classList.toggle("active", b.dataset.lang === lang);
-      });
-    }
-    apply(saved === "zh" ? "zh" : "en"); // English by default
-    document.querySelectorAll(".toggle button").forEach(function (b) {
-      b.addEventListener("click", function () {
-        var lang = b.dataset.lang;
-        try { localStorage.setItem(KEY, lang); } catch (e) {}
-        apply(lang);
-      });
-    });
-  })();
-</script>
+<footer><div class="wrap"><p>relay — MIT · <a href="https://github.com/InnoNestX/relay">InnoNestX</a> · <a href="https://hub.docker.com/r/xuxuclassmate/relay">Docker Hub</a> · <a href="https://clawhub.ai/xuxuclassmate">ClawHub</a> · <span class="l-en">docs in English, switch to 中文 above</span><span class="l-zh">文档默认英文,可在上方切换中文</span></p></div></footer>
+<script src="lang.js"></script>
 </body>
 </html>

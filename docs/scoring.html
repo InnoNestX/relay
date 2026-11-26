@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Scoring gate — relay</title>
+<meta name="description" content="relay's scoring gate: a follow-the-flow hard check, a 100-point rubric, and a configurable pass threshold (default 80)." />
+<link rel="icon" href="favicon.svg" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body class="lang-en">
+
+<div class="nav"><div class="wrap">
+  <a class="brand" href="index.html"><img src="favicon.svg" alt="" />relay</a>
+  <nav class="links">
+    <a href="index.html">Home</a>
+    <a href="install.html">Install</a>
+    <a href="scoring.html" class="active">Scoring gate</a>
+    <a href="skills.html">Skills</a>
+    <a href="https://github.com/InnoNestX/relay">GitHub</a>
+  </nav>
+  <div class="toggle" role="group" aria-label="Language">
+    <button type="button" data-lang="en" class="active">EN</button>
+    <button type="button" data-lang="zh">中文</button>
+  </div>
+</div></div>
+
+<header class="hero"><div class="wrap">
+  <p class="eyebrow"><span class="l-en">The backstop</span><span class="l-zh">兜底机制</span></p>
+  <h1><span class="l-en">Scoring gate</span><span class="l-zh">打分门禁</span></h1>
+  <p class="lead"><span class="l-en">First ask “did it follow the flow?”, then “how well (the score)?”. The first is a hard gate; the second decides whether to re-run.</span><span class="l-zh">先问“有没有按流程走”,再问“走得好不好(分数)”。前者是硬门禁,后者决定是否重跑。</span></p>
+</div></header>
+
+<main class="wrap page">
+  <div class="gate">
+    <p><b>1 · <span class="l-en">Follow-the-flow check (hard gate).</span><span class="l-zh">流程符合性检查(硬门禁)。</span></b> <span class="l-en">Verify every key step exists and is in order (dispatch with the user's words → cases reviewed before saving → testers made their own data → per-step evidence → online report with synced IDs → defects filed + notified → no red lines). If a step is missing or out of order, force the flow from that step before scoring.</span><span class="l-zh">核对每个关键环节是否齐全且顺序正确(派单带用户原话 → 评审通过才落库 → 测试自己造数 → 逐条证据 → 在线报告且编号三处同步 → 提单并通知 → 无红线)。缺失或乱序就从该环节强制重走,再打分。</span></p>
+    <p><b>2 · <span class="l-en">Score out of 100</span><span class="l-zh">按百分制打分</span></b> <span class="l-en">against the rubric below, one line of evidence per row.</span><span class="l-zh">对照下方评分卡,每项写一行依据。</span></p>
+    <p><b>3 · <span class="l-en">Verdict.</span><span class="l-zh">判定。</span></b> <span class="pill">score ≥ PASS_SCORE → pass</span> <span class="pill">below → optimize &amp; re-run</span> <span class="l-en">Threshold configurable in <code>config</code>; default <b>80</b>.</span><span class="l-zh">阈值在 <code>config</code> 可配,默认 <b>80</b>。</span></p>
+  </div>
+
+  <h2><span class="l-en">The rubric (100 points)</span><span class="l-zh">评分卡(满分 100)</span></h2>
+  <table>
+    <tr><th>#</th><th><span class="l-en">Dimension</span><span class="l-zh">维度</span></th><th><span class="l-en">Weight</span><span class="l-zh">权重</span></th><th><span class="l-en">Full-score criterion</span><span class="l-zh">满分标准</span></th></tr>
+    <tr><td>1</td><td><span class="l-en">Dispatch &amp; authorization</span><span class="l-zh">派单与授权</span></td><td>15</td><td><span class="l-en">Clear breakdown; dispatch carries the user's words + time, scope and boundaries.</span><span class="l-zh">拆分清晰;派单带用户原话+时间、范围与边界。</span></td></tr>
+    <tr><td>2</td><td><span class="l-en">Case quality</span><span class="l-zh">用例质量</span></td><td>15</td><td><span class="l-en">md+json+visual trio complete; stored only after review passes.</span><span class="l-zh">md+json+可视化三件套齐全;评审通过后才落库。</span></td></tr>
+    <tr><td>3</td><td><span class="l-en">Data-fabrication compliance</span><span class="l-zh">造数合规</span></td><td>10</td><td><span class="l-en">Prefer the designated data project; restore config when done.</span><span class="l-zh">优先调用指定造数项目;用完配置改回。</span></td></tr>
+    <tr><td>4</td><td><span class="l-en">Execution &amp; judgment</span><span class="l-zh">执行与判定</span></td><td>20</td><td><span class="l-en">Per-case evidence, headless-first, judged by the latest requirement.</span><span class="l-zh">逐条证据、无头优先、按最新需求判定。</span></td></tr>
+    <tr><td>5</td><td><span class="l-en">Reporting &amp; sync</span><span class="l-zh">报告与同步</span></td><td>15</td><td><span class="l-en">Online report; IDs synced across chat/report/defect; clickable links.</span><span class="l-zh">在线报告;编号三处同步;可点链接。</span></td></tr>
+    <tr><td>6</td><td><span class="l-en">Defects &amp; notification</span><span class="l-zh">缺陷与通知</span></td><td>10</td><td><span class="l-en">Four-question minimalist ticket + severity mapping; notify right after filing.</span><span class="l-zh">提单四问+严重度映射;提完即通知。</span></td></tr>
+    <tr><td>7</td><td><span class="l-en">Security red lines</span><span class="l-zh">安全红线</span></td><td>15</td><td><span class="l-en">No credentials in code/KB; redaction; deploy only when authorized.</span><span class="l-zh">凭证不入代码/库;脱敏;授权才部署。</span></td></tr>
+    <tr><td></td><td><b>Total</b></td><td><b>100</b></td><td></td></tr>
+  </table>
+
+  <h2><span class="l-en">Example (fictional)</span><span class="l-zh">示例(虚构)</span></h2>
+  <p class="muted"><span class="l-en">A “library loan due-date reminder” requirement: Mia executes, Leo stores defects, Ava notifies dev Sam. Report not synced + defect not notified → 70 &lt; 80 → list the lost points, do the fixes (sync IDs, send the notification), re-run those two steps, re-score until ≥ 80.</span><span class="l-zh">虚构的「图书馆借阅到期提醒」需求:Mia 执行、Leo 落库、Ava 私信研发 Sam。若报告未同步 + 缺陷未通知 → 70 &lt; 80 → 列扣分项、补做(同步编号、补发通知)、重跑这两环、重新打分直到 ≥ 80。</span></p>
+</main>
+
+<footer><div class="wrap"><p>relay — MIT · <a href="https://github.com/InnoNestX/relay">InnoNestX</a> · <a href="https://hub.docker.com/r/xuxuclassmate/relay">Docker Hub</a> · <a href="https://clawhub.ai/xuxuclassmate">ClawHub</a></p></div></footer>
+<script src="lang.js"></script>
+</body>
+</html>

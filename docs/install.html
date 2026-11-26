@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Install — relay</title>
+<meta name="description" content="Install relay in Claude Code, Cursor, ChatGPT, Gemini, Grok, ClawHub, Docker, or locally." />
+<link rel="icon" href="favicon.svg" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body class="lang-en">
+
+<div class="nav"><div class="wrap">
+  <a class="brand" href="index.html"><img src="favicon.svg" alt="" />relay</a>
+  <nav class="links">
+    <a href="index.html">Home</a>
+    <a href="install.html" class="active">Install</a>
+    <a href="scoring.html">Scoring gate</a>
+    <a href="skills.html">Skills</a>
+    <a href="https://github.com/InnoNestX/relay">GitHub</a>
+  </nav>
+  <div class="toggle" role="group" aria-label="Language">
+    <button type="button" data-lang="en" class="active">EN</button>
+    <button type="button" data-lang="zh">中文</button>
+  </div>
+</div></div>
+
+<header class="hero"><div class="wrap">
+  <p class="eyebrow"><span class="l-en">Install</span><span class="l-zh">安装</span></p>
+  <h1><span class="l-en">Pick your tool</span><span class="l-zh">选择你的工具</span></h1>
+  <p class="lead"><span class="l-en">Claude Code and ClawHub have real plugin packages. Everything else uses the same recipe: paste the system prompt, then optionally add the MCP server.</span><span class="l-zh">Claude Code 与 ClawHub 有正式插件包。其余工具用同一套:贴上系统提示,再按需接 MCP 服务。</span></p>
+  <div class="cta">
+    <a class="btn" href="#claude-code">Claude Code</a>
+    <a class="btn" href="#cursor">Cursor</a>
+    <a class="btn" href="#chatgpt">ChatGPT</a>
+    <a class="btn" href="#gemini">Gemini</a>
+    <a class="btn" href="#grok">Grok</a>
+    <a class="btn" href="#clawhub">ClawHub</a>
+    <a class="btn" href="#docker">Docker / local</a>
+    <a class="btn" href="#mcp">MCP (any client)</a>
+  </div>
+</div></header>
+
+<main class="wrap page">
+
+  <div class="toolcard anchor" id="claude-code">
+    <h3>Claude Code</h3>
+    <p class="muted"><span class="l-en">A real plugin: slash commands + the 24 skills.</span><span class="l-zh">正式插件:slash 命令 + 24 个技能。</span></p>
+    <pre><code>/plugin marketplace add InnoNestX/relay
+/plugin install relay@relay</code></pre>
+    <p class="muted"><span class="l-en">Then run <code>/relay-start &lt;requirement&gt;</code> to act as the supervisor, or <code>/relay-score</code> to run the gate.</span><span class="l-zh">然后用 <code>/relay-start &lt;需求&gt;</code> 以主管身份启动,或 <code>/relay-score</code> 跑门禁。</span></p>
+  </div>
+
+  <div class="toolcard anchor" id="cursor">
+    <h3>Cursor</h3>
+    <ol class="steps">
+      <li><span class="l-en">Copy <code>plugins/cursor/relay.mdc</code> into your repo's <code>.cursor/rules/</code>.</span><span class="l-zh">把 <code>plugins/cursor/relay.mdc</code> 放进仓库的 <code>.cursor/rules/</code>。</span></li>
+      <li><span class="l-en">Add the MCP server to <code>.cursor/mcp.json</code> (see below), or copy <code>plugins/cursor/mcp.json</code>.</span><span class="l-zh">把 MCP 服务加到 <code>.cursor/mcp.json</code>(见下),或复制 <code>plugins/cursor/mcp.json</code>。</span></li>
+    </ol>
+  </div>
+
+  <div class="toolcard anchor" id="chatgpt">
+    <h3>ChatGPT / GPT</h3>
+    <ol class="steps">
+      <li><span class="l-en">Create a Custom GPT (Explore GPTs → Create).</span><span class="l-zh">新建一个自定义 GPT(Explore GPTs → Create)。</span></li>
+      <li><span class="l-en"><b>Instructions</b>: paste <code>plugins/system-prompt.md</code>.</span><span class="l-zh"><b>Instructions</b>:粘贴 <code>plugins/system-prompt.md</code>。</span></li>
+      <li><span class="l-en"><b>Knowledge</b>: upload the <code>skills/*/SKILL.md</code> files + <code>templates/scorecard.md</code>.</span><span class="l-zh"><b>Knowledge</b>:上传 <code>skills/*/SKILL.md</code> + <code>templates/scorecard.md</code>。</span></li>
+      <li><span class="l-en">Or, if your plan has MCP connectors, add the server below.</span><span class="l-zh">或者,若套餐支持 MCP 连接器,添加下面的服务。</span></li>
+    </ol>
+  </div>
+
+  <div class="toolcard anchor" id="gemini">
+    <h3>Google Gemini</h3>
+    <ol class="steps">
+      <li><span class="l-en"><b>Gem</b>: paste <code>plugins/system-prompt.md</code> as the Gem instructions; attach the skills as knowledge.</span><span class="l-zh"><b>Gem</b>:把 <code>plugins/system-prompt.md</code> 作为 Gem 指令;技能作为知识附上。</span></li>
+      <li><span class="l-en"><b>Gemini CLI</b>: add the MCP server to <code>~/.gemini/settings.json</code> (see below).</span><span class="l-zh"><b>Gemini CLI</b>:把 MCP 服务加到 <code>~/.gemini/settings.json</code>(见下)。</span></li>
+    </ol>
+  </div>
+
+  <div class="toolcard anchor" id="grok">
+    <h3>Grok (xAI)</h3>
+    <ol class="steps">
+      <li><span class="l-en">Paste <code>plugins/system-prompt.md</code> into Grok's custom instructions / workspace.</span><span class="l-zh">把 <code>plugins/system-prompt.md</code> 贴进 Grok 的自定义指令 / 工作区。</span></li>
+      <li><span class="l-en">For the full skills, add the MCP server (API / MCP-capable client) or attach the <code>skills/</code> files.</span><span class="l-zh">要用完整技能,接 MCP 服务(API / 支持 MCP 的客户端)或附上 <code>skills/</code> 文件。</span></li>
+    </ol>
+  </div>
+
+  <div class="toolcard anchor" id="clawhub">
+    <h3>ClawHub</h3>
+    <pre><code>clawhub install relay              # skill
+clawhub package explore relay      # plugin (OpenClaw package)</code></pre>
+  </div>
+
+  <div class="toolcard anchor" id="docker">
+    <h3>Docker / <span class="l-en">local</span><span class="l-zh">本地</span></h3>
+    <pre><code>docker run --rm xuxuclassmate/relay list     # list the 24 skills
+docker run --rm xuxuclassmate/relay score    # print the scoring gate
+docker run -i --rm xuxuclassmate/relay       # run as an MCP server (stdio)
+
+# or from a clone:
+node server/cli.mjs list
+node server/index.mjs</code></pre>
+  </div>
+
+  <div class="toolcard anchor" id="mcp">
+    <h3><span class="l-en">MCP — any client</span><span class="l-zh">MCP — 任意客户端</span></h3>
+    <p class="muted"><span class="l-en">Add this to your client's MCP config (Claude Code, Cursor, Gemini CLI, ChatGPT connectors, …):</span><span class="l-zh">把这段加进你客户端的 MCP 配置(Claude Code、Cursor、Gemini CLI、ChatGPT 连接器等):</span></p>
+    <pre><code>{ "mcpServers": { "relay": {
+    "command": "docker", "args": ["run","-i","--rm","xuxuclassmate/relay"] } } }</code></pre>
+    <p class="muted"><span class="l-en">Tools: <code>relay_list_skills</code>, <code>relay_get_skill</code>, <code>relay_get_file</code>, <code>relay_scorecard</code>.</span><span class="l-zh">工具:<code>relay_list_skills</code>、<code>relay_get_skill</code>、<code>relay_get_file</code>、<code>relay_scorecard</code>。</span></p>
+  </div>
+
+  <p class="muted" style="margin-top:22px"><span class="l-en">Every integration is also in the repo under <a href="https://github.com/InnoNestX/relay/tree/main/plugins"><code>plugins/</code></a>. Replace each <code>{placeholder}</code> with your own systems before use — never put credentials in the placeholder file.</span><span class="l-zh">每种接入件也在仓库 <a href="https://github.com/InnoNestX/relay/tree/main/plugins"><code>plugins/</code></a> 下。使用前把每个 <code>{占位符}</code> 换成你自己的系统——占位文件里绝不填凭证。</span></p>
+</main>
+
+<footer><div class="wrap"><p>relay — MIT · <a href="https://github.com/InnoNestX/relay">InnoNestX</a> · <a href="https://hub.docker.com/r/xuxuclassmate/relay">Docker Hub</a> · <a href="https://clawhub.ai/xuxuclassmate">ClawHub</a></p></div></footer>
+<script src="lang.js"></script>
+</body>
+</html>
