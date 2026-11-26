@@ -15,17 +15,17 @@ gate** checks the flow was followed and re-runs until it passes (default pass 80
 Point any MCP client (Claude Code, Cursor, Gemini CLI, ChatGPT connectors, …) at:
 
 ```json
-{ "mcpServers": { "relay": { "command": "docker", "args": ["run","-i","--rm","xuxuclassmate/relay:0.2.0"] } } }
+{ "mcpServers": { "relay": { "command": "docker", "args": ["run","-i","--rm","xuxuclassmate/relay:0.3.1"] } } }
 ```
 
 Tools exposed: `relay_list_skills`, `relay_get_skill`, `relay_get_file`, `relay_scorecard`.
 
 ## Use as a CLI
 ```bash
-docker run --rm xuxuclassmate/relay:0.2.0 list        # list the 24 skills
-docker run --rm xuxuclassmate/relay:0.2.0 show supervisor
-docker run --rm xuxuclassmate/relay:0.2.0 score       # print the scoring gate
-docker run --rm xuxuclassmate/relay:0.2.0 help
+docker run --rm xuxuclassmate/relay:0.3.1 list        # list the 24 skills
+docker run --rm xuxuclassmate/relay:0.3.1 show supervisor
+docker run --rm xuxuclassmate/relay:0.3.1 score       # print the scoring gate
+docker run --rm xuxuclassmate/relay:0.3.1 help
 ```
 
 ## What's inside
