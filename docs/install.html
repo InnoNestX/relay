@@ -93,9 +93,9 @@ clawhub package explore relay      # plugin (OpenClaw package)</code></pre>
 
   <div class="toolcard anchor" id="docker">
     <h3>Docker / <span class="l-en">local</span><span class="l-zh">本地</span></h3>
-    <pre><code>docker run --rm xuxuclassmate/relay:0.4.1@sha256:c48cf3271c0ee4e62b9bdf9a803ca4ec48dcb1648c3798796f9f495ab258a787 list     # list the 24 skills
-docker run --rm xuxuclassmate/relay:0.4.1@sha256:c48cf3271c0ee4e62b9bdf9a803ca4ec48dcb1648c3798796f9f495ab258a787 score    # print the scoring gate
-docker run -i --rm xuxuclassmate/relay:0.4.1@sha256:c48cf3271c0ee4e62b9bdf9a803ca4ec48dcb1648c3798796f9f495ab258a787       # run as an MCP server (stdio)
+    <pre><code>docker run --rm xuxuclassmate/relay:0.4.2@sha256:4ce5281fc95bbc709caf47c530031bc0750cb0f3168860cf456796e91c3165e8 list     # list the 24 skills
+docker run --rm xuxuclassmate/relay:0.4.2@sha256:4ce5281fc95bbc709caf47c530031bc0750cb0f3168860cf456796e91c3165e8 score    # print the scoring gate
+docker run -i --rm xuxuclassmate/relay:0.4.2@sha256:4ce5281fc95bbc709caf47c530031bc0750cb0f3168860cf456796e91c3165e8       # run as an MCP server (stdio)
 
 # or from a clone:
 node server/cli.mjs list
@@ -106,7 +106,7 @@ node server/index.mjs</code></pre>
     <h3><span class="l-en">MCP — any client</span><span class="l-zh">MCP — 任意客户端</span></h3>
     <p class="muted"><span class="l-en">Add this to your client's MCP config (Claude Code, Cursor, Gemini CLI, ChatGPT connectors, …):</span><span class="l-zh">把这段加进你客户端的 MCP 配置(Claude Code、Cursor、Gemini CLI、ChatGPT 连接器等):</span></p>
     <pre><code>{ "mcpServers": { "relay": {
-    "command": "docker", "args": ["run","-i","--rm","xuxuclassmate/relay:0.4.1@sha256:c48cf3271c0ee4e62b9bdf9a803ca4ec48dcb1648c3798796f9f495ab258a787"] } } }</code></pre>
+    "command": "docker", "args": ["run","-i","--rm","xuxuclassmate/relay:0.4.2@sha256:4ce5281fc95bbc709caf47c530031bc0750cb0f3168860cf456796e91c3165e8"] } } }</code></pre>
     <p class="muted"><span class="l-en">Tools: <code>relay_list_skills</code>, <code>relay_get_skill</code>, <code>relay_get_file</code>, <code>relay_scorecard</code>.</span><span class="l-zh">工具:<code>relay_list_skills</code>、<code>relay_get_skill</code>、<code>relay_get_file</code>、<code>relay_scorecard</code>。</span></p>
   </div>
 

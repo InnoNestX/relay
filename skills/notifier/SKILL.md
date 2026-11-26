@@ -105,10 +105,10 @@ The dispatching party does not call {IM_TOOL} directly.
 
 ## 判定规则 · Decision rules
 - 催研发以任务的指派研发为准，不发给测试同事。
-- 对方没有知识库权限时，把知识库内容转成文本发。
+- 对方没有知识库权限时，不要把知识库内容转成文本转发；请其申请知识库权限，或经主管确认后按授权范围分享。
 
 - Follow up with the developer assigned to the task, not with testing colleagues.
-- When the recipient lacks knowledge-base access, convert the knowledge-base content to plain text and send that.
+- When the recipient lacks knowledge-base access, do not forward the content as plain text; ask them to request access, or share only after the supervisor approves that specific material.
 
 ## 交接对象 · Handoff targets
 上游：缺陷助手、测试助手、主管。下游：主管（消息链接）。

@@ -15,17 +15,17 @@ gate** checks the flow was followed and re-runs until it passes (default pass 80
 Point any MCP client (Claude Code, Cursor, Gemini CLI, ChatGPT connectors, …) at:
 
 ```json
-{ "mcpServers": { "relay": { "command": "docker", "args": ["run","-i","--rm","xuxuclassmate/relay:0.4.1@sha256:c48cf3271c0ee4e62b9bdf9a803ca4ec48dcb1648c3798796f9f495ab258a787"] } } }
+{ "mcpServers": { "relay": { "command": "docker", "args": ["run","-i","--rm","xuxuclassmate/relay:0.4.2@sha256:4ce5281fc95bbc709caf47c530031bc0750cb0f3168860cf456796e91c3165e8"] } } }
 ```
 
 Tools exposed: `relay_list_skills`, `relay_get_skill`, `relay_get_file`, `relay_scorecard`.
 
 ## Use as a CLI
 ```bash
-docker run --rm xuxuclassmate/relay:0.4.1@sha256:c48cf3271c0ee4e62b9bdf9a803ca4ec48dcb1648c3798796f9f495ab258a787 list        # list the 24 skills
-docker run --rm xuxuclassmate/relay:0.4.1@sha256:c48cf3271c0ee4e62b9bdf9a803ca4ec48dcb1648c3798796f9f495ab258a787 show supervisor
-docker run --rm xuxuclassmate/relay:0.4.1@sha256:c48cf3271c0ee4e62b9bdf9a803ca4ec48dcb1648c3798796f9f495ab258a787 score       # print the scoring gate
-docker run --rm xuxuclassmate/relay:0.4.1@sha256:c48cf3271c0ee4e62b9bdf9a803ca4ec48dcb1648c3798796f9f495ab258a787 help
+docker run --rm xuxuclassmate/relay:0.4.2@sha256:4ce5281fc95bbc709caf47c530031bc0750cb0f3168860cf456796e91c3165e8 list        # list the 24 skills
+docker run --rm xuxuclassmate/relay:0.4.2@sha256:4ce5281fc95bbc709caf47c530031bc0750cb0f3168860cf456796e91c3165e8 show supervisor
+docker run --rm xuxuclassmate/relay:0.4.2@sha256:4ce5281fc95bbc709caf47c530031bc0750cb0f3168860cf456796e91c3165e8 score       # print the scoring gate
+docker run --rm xuxuclassmate/relay:0.4.2@sha256:4ce5281fc95bbc709caf47c530031bc0750cb0f3168860cf456796e91c3165e8 help
 ```
 
 ## What's inside
