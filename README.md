@@ -1,84 +1,88 @@
-# relay · 多智能体开发+测试工作流
+# relay — multi-agent dev+test workflow
 
-> 一个 QA/开发者 + 一队 AI 助手的协作规范:**主管只派单、专员各管一个外部写出口、临时助手按需并行**,覆盖需求→用例→评审→造数→执行→报告→缺陷→通知→发版的全流程。每个技能都写清了触发、输入、步骤、判定、产出、交接、禁止项、常见错误、自检。
-> 收尾有**兜底打分门禁**:没按流程走就强制走,走完分数不达标(默认 80)就自动优化重跑。
->
-> A rulebook for one engineer working with a team of AI assistants across the whole dev+test lifecycle — plus a **scoring gate** that enforces the flow and re-runs until it passes. Model-agnostic: the skills are plain Markdown, usable by **Claude Code, GPT, Gemini, Cursor, Muse, DeepSeek** and any other agent.
+> Docs are in English. 中文:use the language toggle on the [docs site](https://innonestx.github.io/relay/).
 
-## 它是什么 · What it is
+> A rulebook for one engineer working with a team of AI assistants across the whole dev+test
+> lifecycle — plus a **scoring gate** that enforces the flow and re-runs until it passes.
+> Model-agnostic: the skills are plain Markdown, usable by **Claude Code, GPT, Gemini, Cursor,
+> Muse, Grok, DeepSeek** and any other agent. **Skill content is bilingual (English + 中文).**
 
-- **技能包 (`skills/`)** — 24 个技能(主管、测试、缺陷、通知、编码、文档 + 流程评分),纯 Markdown,**内容中英双语**,任何模型可读。 · 24 skills, plain Markdown, **bilingual (中文 + English)**.
-- **薄服务 (`server/`)** — 一个 MCP 服务 + `relay` CLI,把技能、模板、评分门禁喂给任意 MCP 客户端。 · An MCP server + `relay` CLI.
-- **多形态分发 · Ships everywhere** — Claude Code 插件、Cursor、ChatGPT、Gemini、Grok、ClawHub(skill + plugin)、MCP、Docker、本地;各工具的开箱即用接入件见 **`plugins/`**。 · Per-tool integrations live in **`plugins/`**.
-- **脱敏 · Desensitized** — 所有系统/平台都是 `{占位符}`(见 `config/placeholders.example.yaml`),示例是虚构场景与人名,不含任何真实行业或工作平台。 · Every system is a `{placeholder}`; examples use fictional people — no real platform or industry.
+## What it is
 
-## 核心原则 · Core principles
+- **Skills (`skills/`)** — 24 skills (supervisor, testing, defects, notifier, coder, docs +
+  workflow scoring), plain Markdown, **bilingual**, readable by any model.
+- **Thin server (`server/`)** — an MCP server + a `relay` CLI that feed the skills, templates and
+  the scoring gate to any MCP client.
+- **Ships everywhere** — Claude Code plugin, Cursor, ChatGPT, Gemini, Grok, ClawHub (skill +
+  plugin), MCP, Docker, local. Per-tool integrations live in **`plugins/`**.
+- **Desensitized** — every system is a `{placeholder}` (see `config/placeholders.example.yaml`);
+  examples use fictional people and scenarios — no real platform or industry.
 
-1. 主管只调度不干活。
-2. 一类外部写操作只有一个出口(IM→通知;缺陷系统→缺陷;知识库→文档;代码/部署→编码)。
-3. 按最新需求判定:符合即过,不符合提单,拿不准升级。
-4. 结论进在线报告,编号三处同步。
-5. 测试不排队:忙不过来就并行拉临时助手。
-6. 安全红线高于一切。
-7. **兜底:每次交付前过评分门禁** —— 见下。
+## Core principles
 
-## 兜底打分门禁 · The scoring gate
+1. The supervisor only dispatches (quoting the user's words + time), follows up and summarizes — never executes.
+2. One owner per external write channel: chat → notifier, defect system → defect manager, knowledge base → docs, code/deploy → coder.
+3. Judge against the latest requirement: pass if it matches, file a defect if not, escalate if unclear.
+4. Conclusions live in an online report; issue numbers stay in sync across chat, report and defect system.
+5. Testing never queues — scale out parallel helpers; testers create their own data.
+6. Security red lines override everything.
+7. **Every delivery passes the scoring gate** (below).
+
+## The scoring gate
 
 `skills/workflow-scorecard` + `templates/scorecard.md`:
 
-1. **先硬门禁**:核对关键环节是否齐全且顺序正确。没按流程 → **强制从缺失环节起重走**。
-2. **再打分**:按评分卡逐项给分(满分 100)。
-3. **判定**:`总分 ≥ PASS_SCORE`(默认 80,可在 `config` 配)→ 通过;低于 → 列扣分项、针对性优化、**重跑对应环节**,直到达标或升级。
+1. **Hard gate first** — check every key step happened and in order. If not, force the flow from the missing step before scoring.
+2. **Score out of 100** against the rubric, one line of evidence per row.
+3. **Verdict** — `score ≥ PASS_SCORE` (default **80**, set in `config`) → pass; below → list the lost points, optimize, and re-run the weak steps until it passes or escalate.
 
-## 快速上手 · Quick start
+## Quick start
 
 ```bash
-# 列出技能 / 看评分门禁
-node server/cli.mjs list
-node server/cli.mjs score
-
-# 作为 MCP 服务(任意 MCP 客户端)
-node server/index.mjs            # 本地
-docker run -i --rm xuxuclassmate/relay   # 容器
+node server/cli.mjs list            # list skills + pass score
+node server/cli.mjs score           # print the scoring gate
+node server/index.mjs               # run as an MCP server (stdio)
+docker run -i --rm xuxuclassmate/relay   # same, in a container
 ```
 
-### Claude Code 插件
+### Claude Code
 ```text
 /plugin marketplace add InnoNestX/relay
 /plugin install relay@relay
-# 然后 /relay-start <需求> 、 /relay-score
+# then  /relay-start <requirement>   ·   /relay-score
 ```
 
 ### Cursor
-把 `plugins/cursor/relay.mdc` 放进 `.cursor/rules/`,或把 relay MCP 加到 Cursor 的 MCP 配置:
-```json
-{ "mcpServers": { "relay": { "command": "docker", "args": ["run","-i","--rm","xuxuclassmate/relay"] } } }
-```
+Copy `plugins/cursor/relay.mdc` into `.cursor/rules/`, and/or add `plugins/cursor/mcp.json` to `.cursor/mcp.json`.
 
 ### ClawHub
-- skill:在 ClawHub 搜索 `relay` 安装,或 `clawhub install relay`。
-- plugin(OpenClaw 包):`clawhub package` 里获取 `relay`。
+`clawhub install relay` (skill) · `clawhub package` → `relay` (OpenClaw plugin).
 
-### GPT · Gemini · Grok · DeepSeek · Muse · 其它 · others
-每个工具的开箱即用接入件都在 **`plugins/`**(`chatgpt/`、`gemini/`、`grok/`、`cursor/`、`claude-code/`、`mcp/`)。通用做法:把 `plugins/system-prompt.md` 作为系统提示 / 自定义指令 / Gem,再按需接 relay MCP(`plugins/mcp/config.md`)或把 `skills/` 作为知识库。`relay install generic --dir ./relay-pack` 一键导出整包。
+### GPT · Gemini · Grok · DeepSeek · Muse · others
+Each tool has a ready-made integration under **`plugins/`** (`chatgpt/`, `gemini/`, `grok/`,
+`cursor/`, `claude-code/`, `mcp/`). Paste `plugins/system-prompt.md` as the system prompt / custom
+instructions / Gem, then optionally add the MCP server (`plugins/mcp/config.md`), or export the whole
+pack with `relay install generic --dir ./relay-pack`. See `plugins/README.md`.
 
-Each tool has a ready-made integration under **`plugins/`**: paste `plugins/system-prompt.md` as the system prompt / custom instructions / Gem, then optionally add the MCP server (`plugins/mcp/config.md`). See `plugins/README.md` for the full table.
-
-## 目录 · Layout
+## Layout
 ```text
 relay/
-├── skills/                 # 24 个技能(含 workflow-scorecard)
-├── conventions/            # 公共底座
-├── templates/              # 交接/报告/用例 schema/评分卡
+├── skills/                 # 24 bilingual skills (incl. workflow-scorecard)
+├── conventions/            # shared base rules
+├── templates/              # handoff / report / test-case schema / scorecard
 ├── config/placeholders.example.yaml
-├── examples/               # 虚构端到端示例
+├── examples/               # fictional end-to-end walkthrough
 ├── server/                 # MCP + relay CLI
-├── commands/               # Claude Code slash 命令 · slash commands
-├── plugins/                # 各工具接入 · integrations: system-prompt + mcp/ chatgpt/ gemini/ grok/ cursor/ claude-code/
-├── .claude-plugin/         # Claude Code 插件清单 + marketplace
+├── commands/               # Claude Code slash commands
+├── plugins/                # integrations: system-prompt + mcp/ chatgpt/ gemini/ grok/ cursor/ claude-code/
 ├── Dockerfile
-└── docs/                   # GitHub Pages 文档站
+└── docs/                   # GitHub Pages site (English, with a 中文 toggle)
 ```
 
-## 许可 · License
-MIT,见 `LICENSE`。
+## Docs & links
+- Docs site: https://innonestx.github.io/relay/ (English by default, switch to 中文)
+- Docker Hub: https://hub.docker.com/r/xuxuclassmate/relay
+- ClawHub: https://clawhub.ai/xuxuclassmate
+
+## License
+MIT — see `LICENSE`.
