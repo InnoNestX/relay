@@ -20,6 +20,6 @@ Use the **relay** workflow for development and testing tasks.
   reaches `PASS_SCORE` (default 80) — otherwise run the optimization loop.
 
 To load the full skills: run the relay **MCP server**
-(`docker run -i --rm xuxuclassmate/relay:0.3.1`, or `node server/index.mjs`) and call
+(`docker run -i --rm xuxuclassmate/relay:0.3.2:2797f8315a11acd598949ea63dceaf35c2ce63451168ba6261a1e0e3a8f109a5`, or `node server/index.mjs`) and call
 `relay_list_skills` / `relay_get_skill` / `relay_scorecard`, or copy the
 `skills/` folder into your Cursor rules.
