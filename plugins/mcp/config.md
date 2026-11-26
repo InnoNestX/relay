@@ -10,7 +10,7 @@ relay 的 MCP 服务向任意 MCP 客户端暴露 `relay_list_skills` / `relay_g
 ```json
 {
   "mcpServers": {
-    "relay": { "command": "docker", "args": ["run", "-i", "--rm", "xuxuclassmate/relay:0.4.0@sha256:c48cf3271c0ee4e62b9bdf9a803ca4ec48dcb1648c3798796f9f495ab258a787"] }
+    "relay": { "command": "docker", "args": ["run", "-i", "--rm", "xuxuclassmate/relay:0.4.1@sha256:c48cf3271c0ee4e62b9bdf9a803ca4ec48dcb1648c3798796f9f495ab258a787"] }
   }
 }
 ```
@@ -31,5 +31,5 @@ relay 的 MCP 服务向任意 MCP 客户端暴露 `relay_list_skills` / `relay_g
 - **ChatGPT**: Settings → Connectors / Developer mode → add MCP server — see `plugins/chatgpt/`.
 - **Any other MCP client**: same JSON under its `mcpServers` key.
 
-> Tip · 提示: `docker run --rm xuxuclassmate/relay:0.4.0@sha256:c48cf3271c0ee4e62b9bdf9a803ca4ec48dcb1648c3798796f9f495ab258a787 list` and `... score` also work as a quick CLI
+> Tip · 提示: `docker run --rm xuxuclassmate/relay:0.4.1@sha256:c48cf3271c0ee4e62b9bdf9a803ca4ec48dcb1648c3798796f9f495ab258a787 list` and `... score` also work as a quick CLI
 > without any MCP client. 不接客户端时,这两条命令也能直接用。

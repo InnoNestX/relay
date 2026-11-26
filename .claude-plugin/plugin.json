@@ -1,7 +1,7 @@
 {
   "name": "relay",
   "description": "Model-agnostic multi-agent dev+test workflow: a supervisor dispatches, specialists each own one write channel, parallel helpers scale out — with a scoring gate that enforces the flow (pass score configurable, default 80). Bilingual (中文 + English).",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "author": { "name": "InnoNestX" },
   "homepage": "https://innonestx.github.io/relay/",
   "keywords": ["workflow", "multi-agent", "testing", "qa", "dev", "skills", "mcp"]
