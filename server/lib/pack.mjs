@@ -1,12 +1,39 @@
 // Shared helpers: read the relay pack (skills / conventions / templates / config)
 // from the repo root, regardless of where the server/CLI is launched.
-import { readdir, readFile } from 'node:fs/promises';
-import { existsSync } from 'node:fs';
+import { readdir, readFile, realpath } from 'node:fs/promises';
+import { existsSync, realpathSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const here = path.dirname(fileURLToPath(import.meta.url)); // <root>/server/lib
 export const ROOT = path.resolve(process.env.RELAY_ROOT || path.join(here, '..', '..'));
+// Canonical root (symlinks resolved) used for all containment checks.
+const REAL_ROOT = existsSync(ROOT) ? realpathSync(ROOT) : ROOT;
+
+// A skill name is a single path segment: letters, digits, dash, underscore.
+// Rejects separators, "." and ".." so it can never escape the skills directory.
+function assertName(name) {
+  if (typeof name !== 'string' || !/^[A-Za-z0-9][A-Za-z0-9_-]*$/.test(name)) {
+    throw new Error(`invalid skill name: ${name}`);
+  }
+  return name;
+}
+
+// Read a file only if it stays inside the canonical pack root, both
+// lexically and after symlinks are resolved.
+async function readContained(full, label) {
+  const rel = path.relative(REAL_ROOT, full);
+  if (rel === '' || rel.startsWith('..') || path.isAbsolute(rel)) {
+    throw new Error(`path outside the pack: ${label}`);
+  }
+  if (!existsSync(full)) throw new Error(`not found: ${label}`);
+  const real = await realpath(full);
+  const realRel = path.relative(REAL_ROOT, real);
+  if (realRel.startsWith('..') || path.isAbsolute(realRel)) {
+    throw new Error(`path outside the pack: ${label}`);
+  }
+  return readFile(real, 'utf8');
+}
 
 export function root() {
   return ROOT;
@@ -52,19 +79,18 @@ export async function listSkills() {
 }
 
 export async function getSkill(name) {
-  const f = path.join(ROOT, 'skills', name, 'SKILL.md');
-  if (!existsSync(f)) throw new Error(`skill not found: ${name}`);
-  return readFile(f, 'utf8');
+  assertName(name);
+  const full = path.join(REAL_ROOT, 'skills', name, 'SKILL.md');
+  return readContained(full, `skill: ${name}`);
 }
 
-// Read any pack file by repo-relative path, refusing path escapes.
+// Read any pack file by repo-relative path, refusing path escapes and symlinks.
 export async function getFile(rel) {
-  const full = path.resolve(ROOT, rel);
-  if (full !== ROOT && !full.startsWith(ROOT + path.sep)) {
-    throw new Error('path outside the pack');
+  if (typeof rel !== 'string' || rel.includes('\0')) {
+    throw new Error('invalid path');
   }
-  if (!existsSync(full)) throw new Error(`file not found: ${rel}`);
-  return readFile(full, 'utf8');
+  const full = path.resolve(REAL_ROOT, rel);
+  return readContained(full, rel);
 }
 
 export async function passScore() {

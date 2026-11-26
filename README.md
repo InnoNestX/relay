@@ -42,7 +42,7 @@
 node server/cli.mjs list            # list skills + pass score
 node server/cli.mjs score           # print the scoring gate
 node server/index.mjs               # run as an MCP server (stdio)
-docker run -i --rm xuxuclassmate/relay:0.3.2:2797f8315a11acd598949ea63dceaf35c2ce63451168ba6261a1e0e3a8f109a5   # same, in a container
+docker run -i --rm xuxuclassmate/relay:0.4.0@sha256:c48cf3271c0ee4e62b9bdf9a803ca4ec48dcb1648c3798796f9f495ab258a787   # same, in a container
 ```
 
 ### Claude Code
