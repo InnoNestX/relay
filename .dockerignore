@@ -1,0 +1,5 @@
+**/node_modules
+.git
+docs/_site
+*.log
+.DS_Store

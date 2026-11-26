@@ -1,0 +1,66 @@
+# 占位配置示例：复制为 placeholders.yaml 后按你的环境填写。
+# 所有技能文件里的 {XXX} 都对应这里的一个键。不要在这里填任何密码、令牌或密钥，
+# 凭证一律放 {SECRET_VAULT}，运行时注入。
+
+# ---------- 角色名册（改成你部署里的助手名称/ID） ----------
+ROLE_SUPERVISOR: "主管助手"
+ROLE_TEST_WORKER: "测试助手"
+ROLE_DEFECT_MANAGER: "缺陷助手"
+ROLE_NOTIFIER: "通知助手"
+ROLE_CODER: "编码助手"
+ROLE_DOCS: "文档助手"
+HELPER_NAME_PATTERN: "TestHelper-YYYYMMDD-n"   # 临时测试助手命名规则
+MAX_PARALLEL_HELPERS: "<待补充>"               # 并行临时助手上限，见 GAPS
+
+# ---------- 外部系统（通用称呼 → 你的产品） ----------
+DEFECT_SYSTEM: "<缺陷/用例管理系统>"
+DEFECT_SYSTEM_RICH_FORMAT: "<该系统文档要求的富文本格式，如 HTML>"
+MY_TASK_LIST: "<缺陷系统里「指派给我」的待测任务列表>"
+IM_TOOL: "<即时通讯工具>"
+REQ_CHANNEL: "<需求讨论群/频道>"
+KNOWLEDGE_BASE: "<知识库>"
+SECRET_VAULT: "<凭证保险库>"
+DB_QUERY_TOOL: "<只读查库工具>"
+
+# ---------- 环境 ----------
+TEST_ENV: "<稳定测试环境，作为结论基准>"
+DEV_ENV: "<开发环境，仅作参考>"
+PROD_ENV: "<生产环境，只读>"
+ADMIN_ACCESS_ROUTE: "<后台访问出口，如已加白名单的本机/代理>"
+TZ: "<报告统一时区，如 UTC+4>"
+DEFECT_SYSTEM_TZ: "<缺陷系统动作时间所用时区>"
+
+# ---------- 造数 ----------
+DATA_FACTORY_PROJECT: "<用户指定的造数项目>"
+DATA_FACTORY_ENTRY: "<造数项目的调用入口：命令/接口/脚本名>"
+API_TEST_PROJECT: "<用户的接口测试项目>"
+MOCK_API_BASE: "<模拟接口入口：模拟入账/模拟状态推进/模拟第三方回调>"
+MULTI_IP_SUBMIT_ENTRY: "<每次请求可换出口 IP 的业务单提交入口>"
+HOSTED_PAGE_ENTRY: "<建业务单后返回第三方托管页地址的入口>"
+DEFAULT_TENANTS: "<优先复用的现有租户/组织/账号>"
+
+# ---------- 报告 ----------
+REPORT_SITE: "<需登录的测试报告站>"
+REPORT_INDEX_URL: "<报告汇总页>"
+REPORT_SHARE_DIR: "<报告分享目录>"
+ARCHIVE_DIR: "<报告归档目录（移出不删）>"
+MAX_PERF_REPORTS: 2              # 报告站保留的性能报告份数上限
+
+# ---------- 缺陷 ----------
+SEVERITY_MAP: { 高: 2, 中: 3, 性能: 3, 低: 4, 最高: "<待补充>" }
+DOC_UPDATE_OWNER_ROLE: "<被指派后多为文档更新单的角色，如产品>"
+READ_ONLY_CONTACTS: ["<只读不发消息的人员名单>"]
+TONE_TEMPLATE: "<称呼>老师好，……需要大佬帮个忙看一下，辛苦了！"
+
+# ---------- 知识库 / 发版 ----------
+PLATFORM_ORDER: ["移动网页", "PC", "App", "平台后台", "租户后台"]
+RELEASE_SCOPE_CLOSERS: ["<只收这些人关闭的条目>"]
+RELEASE_SCOPE_DOMAIN: "<只收这个业务范围的条目>"
+PERMISSION_DOC: "<权限分配说明文档>"
+
+# ---------- 流程评分门禁（兜底机制） ----------
+# relay 的兜底：每次交付前按 templates/scorecard.md 给「是否遵循 relay 流程」打分。
+PASS_SCORE: 80                  # 通过线（0-100，可配）。总分 ≥ 此值才放行；低于则触发优化重跑。
+SCORECARD: "templates/scorecard.md"   # 评分卡路径
+MAX_OPTIMIZE_ROUNDS: 3          # 优化重跑的最大轮次；连续两轮不提升则升级主管/用户
+ENFORCE_FLOW: true              # true=未按流程时强制从缺失环节起按 relay 流程重走，而不是直接打分

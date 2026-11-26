@@ -1,0 +1,83 @@
+{
+  "title": "测试用例稿（md / json / 可视化稿三份同源的数据源）",
+  "type": "object",
+  "required": ["requirement", "summary", "common_preconditions", "open_questions", "coverage", "modules"],
+  "properties": {
+    "requirement": {
+      "type": "object",
+      "required": ["id", "name", "version"],
+      "properties": {
+        "id": {"type": "string", "description": "需求编号（内部用，不写进通知文案）"},
+        "name": {"type": "string", "description": "需求名称"},
+        "version": {"type": "string", "description": "依据的需求文档版本"}
+      }
+    },
+    "summary": {
+      "type": "object",
+      "description": "摘要表，全部为可点链接",
+      "properties": {
+        "requirement_doc": {"type": "string"},
+        "requirement_item": {"type": "string"},
+        "prototype": {"type": "string"},
+        "case_doc": {"type": "string"},
+        "environment": {"type": "string"}
+      }
+    },
+    "common_preconditions": {"type": "array", "items": {"type": "string"}, "description": "公共前置，只写一次"},
+    "open_questions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["no", "question", "source", "default"],
+        "properties": {
+          "no": {"type": "integer"},
+          "question": {"type": "string"},
+          "source": {"type": "string", "description": "差异来源：文档章节 / 原型页 / 群消息"},
+          "default": {"type": "string", "description": "口径未定前的默认处理"},
+          "status": {"enum": ["待确认", "已定", "讨论中"]}
+        }
+      }
+    },
+    "coverage": {
+      "type": "object",
+      "description": "覆盖一览：要点 × 维度，各优先级条数",
+      "properties": {
+        "points": {"type": "integer"},
+        "by_priority": {"type": "object", "properties": {"P0": {"type": "integer"}, "P1": {"type": "integer"}, "P2": {"type": "integer"}}},
+        "matrix": {"type": "array", "items": {"type": "object"}}
+      }
+    },
+    "modules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["module", "cases"],
+        "properties": {
+          "module": {"type": "string"},
+          "cases": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["id", "title", "priority", "type", "steps", "expected"],
+              "properties": {
+                "id": {"type": "string", "pattern": "^TC-[A-Z]+-[A-Z0-9]+-[FE]-[0-9]{3}$", "description": "TC-<端>-<模块>-<F|E>-NNN"},
+                "title": {"type": "string"},
+                "priority": {"enum": ["P0", "P1", "P2"]},
+                "type": {"enum": ["功能", "异常", "边界", "权限", "性能", "兼容", "回归"]},
+                "precondition": {"type": "string", "description": "增量前置"},
+                "data": {"type": "string", "description": "数据与造数方式"},
+                "steps": {"type": "array", "items": {"type": "string"}},
+                "expected": {"type": "string", "description": "单一、可判定的预期；异常类写清兜底与提示"},
+                "status_tag": {"enum": ["正常", "待确认", "本期不测"]},
+                "change_log": {"type": "array", "items": {"type": "string"}, "description": "MM-DD 按 <口径/缺陷单> 更新"}
+              }
+            }
+          }
+        }
+      }
+    },
+    "not_in_scope": {"type": "array", "items": {"type": "string"}},
+    "self_review": {"type": "string"},
+    "review_log": {"type": "array", "items": {"type": "object"}}
+  }
+}

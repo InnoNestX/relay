@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>relay — multi-agent dev+test workflow</title>
+<meta name="description" content="A model-agnostic multi-agent dev+test workflow: a supervisor dispatches, specialists execute, parallel helpers scale out — with a scoring gate that enforces the flow." />
+<style>
+  :root{--bg:#0b0d10;--surface:#14181d;--line:#232a31;--ink:#eef2f6;--muted:#9aa7b2;--blue:#4c8dff;--teal:#2dd4bf;--purple:#a78bfa;--amber:#f5b556}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif}
+  a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+  .wrap{max-width:960px;margin:0 auto;padding:0 20px}
+  header{padding:72px 0 40px;border-bottom:1px solid var(--line)}
+  .eyebrow{color:var(--teal);font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-size:13px}
+  h1{font-size:clamp(34px,6vw,56px);margin:.2em 0 .1em;letter-spacing:-.02em}
+  .lead{color:var(--muted);font-size:clamp(17px,2.4vw,21px);max-width:60ch}
+  .cta{margin-top:26px;display:flex;gap:12px;flex-wrap:wrap}
+  .btn{display:inline-block;padding:11px 18px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-weight:600}
+  .btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}
+  section{padding:48px 0;border-bottom:1px solid var(--line)}
+  h2{font-size:clamp(24px,3.4vw,32px);letter-spacing:-.01em;margin:0 0 18px}
+  h3{margin:28px 0 8px;font-size:18px}
+  .grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px}
+  .card h4{margin:0 0 6px;font-size:15px}
+  .card p{margin:0;color:var(--muted);font-size:14px}
+  .tag{color:var(--purple);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+  ol.principles{counter-reset:p;list-style:none;padding:0}
+  ol.principles li{counter-increment:p;position:relative;padding:10px 0 10px 40px;color:var(--muted)}
+  ol.principles li::before{content:counter(p);position:absolute;left:0;top:8px;width:26px;height:26px;border-radius:8px;background:var(--surface);border:1px solid var(--line);color:var(--ink);display:grid;place-items:center;font-size:13px;font-weight:700}
+  ol.principles b{color:var(--ink)}
+  pre{background:#0f1317;border:1px solid var(--line);border-radius:12px;padding:16px;overflow:auto;font-size:13px;line-height:1.55}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  .gate{background:linear-gradient(180deg,rgba(76,141,255,.08),transparent);border:1px solid var(--line);border-radius:16px;padding:22px}
+  .pill{display:inline-block;background:#0f1317;border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:12px;color:var(--muted);margin:2px 4px 2px 0}
+  footer{padding:40px 0 70px;color:var(--muted);font-size:14px}
+  .muted{color:var(--muted)}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <p class="eyebrow">InnoNestX · open source</p>
+  <h1>relay</h1>
+  <p class="lead">A model-agnostic multi-agent workflow for the whole dev + test lifecycle. A supervisor dispatches, specialists each own one write channel, parallel helpers scale out — and a scoring gate makes sure the flow was actually followed.</p>
+  <div class="cta">
+    <a class="btn primary" href="https://github.com/InnoNestX/relay">GitHub</a>
+    <a class="btn" href="#install">Install</a>
+    <a class="btn" href="#gate">The scoring gate</a>
+  </div>
+  <p class="muted" style="margin-top:22px">Works with <b>Claude Code · GPT · Gemini · Cursor · Muse · DeepSeek</b> and any other agent — the skills are plain Markdown.</p>
+</div></header>
+
+<section><div class="wrap">
+  <h2>What you get</h2>
+  <div class="grid">
+    <div class="card"><span class="tag">skills</span><h4>24 workflow skills</h4><p>Supervisor, testing, defects, notifications, coding, docs — each with triggers, steps, decision rules, output templates and a self-check.</p></div>
+    <div class="card"><span class="tag">gate</span><h4>Scoring gate</h4><p>Before delivery: did it follow the flow, and did it score high enough? Below the threshold → optimize and re-run.</p></div>
+    <div class="card"><span class="tag">server</span><h4>MCP + CLI</h4><p>A thin server feeds skills, templates and the gate to any MCP client, or run <code>relay</code> on the command line.</p></div>
+    <div class="card"><span class="tag">ship</span><h4>Many formats</h4><p>Claude Code plugin, Cursor rule, ClawHub skill + plugin, Docker image, or local.</p></div>
+    <div class="card"><span class="tag">safe</span><h4>Desensitized</h4><p>Every system is a <code>{placeholder}</code>; examples use fictional people and scenarios — no real platform or industry.</p></div>
+    <div class="card"><span class="tag">any model</span><h4>Model-agnostic</h4><p>Plain Markdown skills any model can read; MCP where the client supports it.</p></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <h2>Principles</h2>
+  <ol class="principles">
+    <li><b>The supervisor dispatches, never executes.</b></li>
+    <li><b>One owner per external write channel</b> — chat, defect system, knowledge base, code/deploy.</li>
+    <li><b>Judge against the latest requirement</b> — pass, file, or escalate.</li>
+    <li><b>Conclusions live in an online report</b>; issue numbers stay in sync in three places.</li>
+    <li><b>Testing never queues</b> — scale out parallel helpers; testers make their own data.</li>
+    <li><b>Security red lines override everything.</b></li>
+    <li><b>Every delivery passes the scoring gate.</b></li>
+  </ol>
+</div></section>
+
+<section id="gate"><div class="wrap">
+  <h2>The scoring gate</h2>
+  <div class="gate">
+    <p><b>1 · Follow-the-flow check (hard gate).</b> Verify every key step exists and is in order. If not, force the flow from the missing step — before any score.</p>
+    <p><b>2 · Score out of 100</b> against the rubric (<code>templates/scorecard.md</code>), one line of evidence per row.</p>
+    <p><b>3 · Verdict.</b> <span class="pill">score ≥ PASS_SCORE → pass</span> <span class="pill">below → optimize &amp; re-run</span> The threshold is configurable; default <b>80</b>.</p>
+  </div>
+</div></section>
+
+<section id="install"><div class="wrap">
+  <h2>Install</h2>
+  <h3>Claude Code plugin</h3>
+  <pre><code>/plugin marketplace add InnoNestX/relay
+/plugin install relay@relay
+# then: /relay-start &lt;requirement&gt;   ·   /relay-score</code></pre>
+  <h3>MCP (Cursor, Claude, any MCP client)</h3>
+  <pre><code>{ "mcpServers": { "relay": {
+    "command": "docker", "args": ["run","-i","--rm","xuxuclassmate/relay"] } } }</code></pre>
+  <h3>Docker / local</h3>
+  <pre><code>docker run --rm xuxuclassmate/relay list
+docker run -i --rm xuxuclassmate/relay            # MCP over stdio
+# or local:
+node server/cli.mjs list   ·   node server/cli.mjs score</code></pre>
+  <h3>ClawHub</h3>
+  <pre><code>clawhub install relay        # skill
+clawhub package explore relay # plugin (OpenClaw package)</code></pre>
+  <h3>GPT / Gemini / DeepSeek / Muse</h3>
+  <p class="muted">Feed the <code>skills/</code> Markdown as system prompt / knowledge, or export the whole pack with <code>relay install generic --dir ./relay-pack</code>.</p>
+</div></section>
+
+<footer><div class="wrap">
+  <p>relay — MIT. Built by <a href="https://github.com/InnoNestX">InnoNestX</a>. Content in Chinese; docs bilingual.</p>
+</div></footer>
+</body>
+</html>

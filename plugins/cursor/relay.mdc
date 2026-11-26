@@ -1,0 +1,25 @@
+---
+description: relay — multi-agent dev+test workflow with a scoring gate
+globs:
+alwaysApply: false
+---
+
+# relay workflow (Cursor)
+
+Use the **relay** workflow for development and testing tasks.
+
+- A **supervisor** only splits, dispatches (quoting the user's words + time),
+  follows up and summarizes — it never executes.
+- Each specialist owns **one** external write channel (defect system, chat,
+  knowledge base, code/deploy, report index).
+- Judge against the **latest** requirement; testing never queues — scale out
+  parallel helpers; testers create their own data; **security red lines override
+  everything**.
+- **Before delivering, run the scoring gate** (`workflow-scorecard`): confirm the
+  flow was followed, score the run out of 100, and only finish when the score
+  reaches `PASS_SCORE` (default 80) — otherwise run the optimization loop.
+
+To load the full skills: run the relay **MCP server**
+(`docker run -i --rm xuxuclassmate/relay`, or `node server/index.mjs`) and call
+`relay_list_skills` / `relay_get_skill` / `relay_scorecard`, or copy the
+`skills/` folder into your Cursor rules.

@@ -1,0 +1,11 @@
+{
+  "name": "relay",
+  "owner": { "name": "InnoNestX" },
+  "plugins": [
+    {
+      "name": "relay",
+      "source": "./",
+      "description": "Model-agnostic multi-agent dev+test workflow with a scoring gate (default pass 80)."
+    }
+  ]
+}
