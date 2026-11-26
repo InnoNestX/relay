@@ -2,7 +2,7 @@
   "mcpServers": {
     "relay": {
       "command": "docker",
-      "args": ["run", "-i", "--rm", "xuxuclassmate/relay"]
+      "args": ["run", "-i", "--rm", "xuxuclassmate/relay:0.2.0"]
     }
   }
 }

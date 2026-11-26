@@ -17,7 +17,7 @@ Add relay to `~/.gemini/settings.json`:
 ```json
 {
   "mcpServers": {
-    "relay": { "command": "docker", "args": ["run", "-i", "--rm", "xuxuclassmate/relay"] }
+    "relay": { "command": "docker", "args": ["run", "-i", "--rm", "xuxuclassmate/relay:0.2.0"] }
   }
 }
 ```
