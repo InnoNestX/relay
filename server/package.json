@@ -1,7 +1,7 @@
 {
   "name": "relay-workflow",
-  "version": "0.1.0",
-  "description": "relay — a model-agnostic multi-agent dev+test workflow: skills, a scoring gate, and a thin MCP + CLI.",
+  "version": "0.2.0",
+  "description": "relay — a model-agnostic multi-agent dev+test workflow: bilingual skills, a scoring gate, and a thin MCP + CLI.",
   "type": "module",
   "bin": {
     "relay": "./cli.mjs"

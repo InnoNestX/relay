@@ -45,8 +45,10 @@
   <p class="lead">A model-agnostic multi-agent workflow for the whole dev + test lifecycle. A supervisor dispatches, specialists each own one write channel, parallel helpers scale out — and a scoring gate makes sure the flow was actually followed.</p>
   <div class="cta">
     <a class="btn primary" href="https://github.com/InnoNestX/relay">GitHub</a>
+    <a class="btn" href="https://hub.docker.com/r/xuxuclassmate/relay">Docker Hub</a>
+    <a class="btn" href="https://clawhub.ai/xuxuclassmate">ClawHub</a>
     <a class="btn" href="#install">Install</a>
-    <a class="btn" href="#gate">The scoring gate</a>
+    <a class="btn" href="#gate">Scoring gate</a>
   </div>
   <p class="muted" style="margin-top:22px">Works with <b>Claude Code · GPT · Gemini · Cursor · Muse · DeepSeek</b> and any other agent — the skills are plain Markdown.</p>
 </div></header>
@@ -87,6 +89,12 @@
 
 <section id="install"><div class="wrap">
   <h2>Install</h2>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;margin:0 0 22px">
+    <a class="btn primary" href="https://github.com/InnoNestX/relay">GitHub repo</a>
+    <a class="btn" href="https://hub.docker.com/r/xuxuclassmate/relay">Docker Hub image</a>
+    <a class="btn" href="https://clawhub.ai/xuxuclassmate">ClawHub skill &amp; plugin</a>
+    <a class="btn" href="https://github.com/InnoNestX/relay/tree/main/plugins">Per-tool integrations</a>
+  </div>
   <h3>Claude Code plugin</h3>
   <pre><code>/plugin marketplace add InnoNestX/relay
 /plugin install relay@relay
@@ -102,12 +110,12 @@ node server/cli.mjs list   ·   node server/cli.mjs score</code></pre>
   <h3>ClawHub</h3>
   <pre><code>clawhub install relay        # skill
 clawhub package explore relay # plugin (OpenClaw package)</code></pre>
-  <h3>GPT / Gemini / DeepSeek / Muse</h3>
-  <p class="muted">Feed the <code>skills/</code> Markdown as system prompt / knowledge, or export the whole pack with <code>relay install generic --dir ./relay-pack</code>.</p>
+  <h3>GPT · Gemini · Grok · DeepSeek · Muse · any model</h3>
+  <p class="muted">Each tool has a ready-made integration under <a href="https://github.com/InnoNestX/relay/tree/main/plugins"><code>plugins/</code></a> (chatgpt, gemini, grok, cursor, claude-code, mcp). Paste <code>plugins/system-prompt.md</code> as the system prompt / custom instructions / Gem, then optionally add the MCP server — or export the whole pack with <code>relay install generic --dir ./relay-pack</code>.</p>
 </div></section>
 
 <footer><div class="wrap">
-  <p>relay — MIT. Built by <a href="https://github.com/InnoNestX">InnoNestX</a>. Content in Chinese; docs bilingual.</p>
+  <p>relay — MIT. Built by <a href="https://github.com/InnoNestX">InnoNestX</a>. Content and docs are bilingual (中文 + English).</p>
 </div></footer>
 </body>
 </html>

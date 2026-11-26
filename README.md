@@ -7,10 +7,10 @@
 
 ## 它是什么 · What it is
 
-- **技能包 (`skills/`)** — 24 个技能(主管、测试、缺陷、通知、编码、文档 + 流程评分),纯 Markdown,任何模型可读。
-- **薄服务 (`server/`)** — 一个 MCP 服务 + `relay` CLI,把技能、模板、评分门禁喂给任意 MCP 客户端。
-- **多形态分发** — Claude Code 插件、Cursor 规则、ClawHub skill + plugin、Docker 镜像、本地直接运行。
-- **脱敏** — 所有系统/平台都是 `{占位符}`(见 `config/placeholders.example.yaml`),示例是虚构场景与人名,不含任何真实行业或工作平台。
+- **技能包 (`skills/`)** — 24 个技能(主管、测试、缺陷、通知、编码、文档 + 流程评分),纯 Markdown,**内容中英双语**,任何模型可读。 · 24 skills, plain Markdown, **bilingual (中文 + English)**.
+- **薄服务 (`server/`)** — 一个 MCP 服务 + `relay` CLI,把技能、模板、评分门禁喂给任意 MCP 客户端。 · An MCP server + `relay` CLI.
+- **多形态分发 · Ships everywhere** — Claude Code 插件、Cursor、ChatGPT、Gemini、Grok、ClawHub(skill + plugin)、MCP、Docker、本地;各工具的开箱即用接入件见 **`plugins/`**。 · Per-tool integrations live in **`plugins/`**.
+- **脱敏 · Desensitized** — 所有系统/平台都是 `{占位符}`(见 `config/placeholders.example.yaml`),示例是虚构场景与人名,不含任何真实行业或工作平台。 · Every system is a `{placeholder}`; examples use fictional people — no real platform or industry.
 
 ## 核心原则 · Core principles
 
@@ -59,8 +59,10 @@ docker run -i --rm xuxuclassmate/relay   # 容器
 - skill:在 ClawHub 搜索 `relay` 安装,或 `clawhub install relay`。
 - plugin(OpenClaw 包):`clawhub package` 里获取 `relay`。
 
-### GPT / Gemini / DeepSeek / Muse 等
-技能是纯 Markdown:把 `skills/` 作为系统提示/知识库喂给模型,或接 relay MCP(支持 MCP 的客户端)。`relay install generic --dir ./relay-pack` 可一键导出整包。
+### GPT · Gemini · Grok · DeepSeek · Muse · 其它 · others
+每个工具的开箱即用接入件都在 **`plugins/`**(`chatgpt/`、`gemini/`、`grok/`、`cursor/`、`claude-code/`、`mcp/`)。通用做法:把 `plugins/system-prompt.md` 作为系统提示 / 自定义指令 / Gem,再按需接 relay MCP(`plugins/mcp/config.md`)或把 `skills/` 作为知识库。`relay install generic --dir ./relay-pack` 一键导出整包。
+
+Each tool has a ready-made integration under **`plugins/`**: paste `plugins/system-prompt.md` as the system prompt / custom instructions / Gem, then optionally add the MCP server (`plugins/mcp/config.md`). See `plugins/README.md` for the full table.
 
 ## 目录 · Layout
 ```text
@@ -71,8 +73,8 @@ relay/
 ├── config/placeholders.example.yaml
 ├── examples/               # 虚构端到端示例
 ├── server/                 # MCP + relay CLI
-├── commands/               # Claude Code slash 命令
-├── plugins/cursor/         # Cursor 规则
+├── commands/               # Claude Code slash 命令 · slash commands
+├── plugins/                # 各工具接入 · integrations: system-prompt + mcp/ chatgpt/ gemini/ grok/ cursor/ claude-code/
 ├── .claude-plugin/         # Claude Code 插件清单 + marketplace
 ├── Dockerfile
 └── docs/                   # GitHub Pages 文档站
